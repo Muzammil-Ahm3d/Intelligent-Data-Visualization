@@ -1,0 +1,16 @@
+Date,Region,Product,Sales,Profit,Units Sold,Customer Satisfaction
+2023-01-01,North,Widget A,1000,200,50,4.5
+2023-01-02,South,Widget B,1500,300,60,4.2
+2023-01-03,East,Widget A,1200,250,55,4.7
+2023-01-04,West,Widget C,800,100,20,3.8
+2023-01-05,North,Widget B,1600,350,65,4.6
+2023-01-06,South,Widget C,900,150,25,3.9
+2023-01-07,East,Widget A,1300,280,58,4.8
+2023-01-08,West,Widget B,1400,290,62,4.1
+2023-01-09,North,Widget A,1100,220,52,4.4
+2023-01-10,South,Widget B,1550,310,63,4.3
+2023-01-11,East,Widget C,850,110,22,3.7
+2023-01-12,West,Widget A,1050,210,51,4.5
+2023-01-13,North,Widget C,950,180,28,4.0
+2023-01-14,South,Widget A,1250,260,56,4.6
+2023-01-15,East,Widget B,1450,305,61,4.2

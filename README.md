@@ -1,0 +1,87 @@
+# Intelligent Data Visualization Platform
+
+Welcome to the **Intelligent Data Visualization Platform**, a comprehensive tool designed to simplify data analysis. With features like **Auto Exploration**, **Data Copilot** (powered by Google Gemini), and dynamic **Dashboards**, turning raw data into actionable insights has never been easier.
+
+## 🚀 Features
+
+- **📂 Multi-Format Support**: Upload CSV or Excel files seamlessly.
+- **📊 Auto Exploration**: Automatically generate key insights, trends, and distributions with a single click.
+- **🤖 Data Copilot**: Interact with your data using natural language. Ask questions like "What is the total revenue?" or "Show me the top 5 products" and get code-backed answers.
+- **🔍 Manual Exploration**: Dive deep into your data by creating custom scatter plots and analyses.
+- **📉 Interactive Dashboard**: A unified view of your most important metrics and KPIs, complete with global filters.
+
+## 🏗️ System Architecture
+
+The platform is built using a modular architecture to ensure scalability and maintainability.
+
+```mermaid
+graph TD
+    User(["User"]) <--> App["Streamlit App (app.py)"]
+    
+    subgraph "Frontend Layer"
+        App
+    end
+    
+    subgraph "Logic Layer"
+        Loader[src.loader]
+        Analysis[src.analysis]
+        Visualizer[src.visualizer]
+        Copilot[src.copilot]
+    end
+    
+    subgraph "External Services"
+        Gemini["Google Gemini API"]
+    end
+    
+    App -->|Load Data| Loader
+    App -->|Profile Data| Analysis
+    App -->|Generate Charts| Visualizer
+    App -->|Ask Question| Copilot
+    Copilot <-->|API Call| Gemini
+```
+
+### Components
+- **`app.py`**: The main entry point. It handles the UI layout, navigation state, and user interactions.
+- **`src.loader`**: Responsible for reading and preprocessing CSV and Excel files.
+- **`src.analysis`**: Performs data profiling, type detection (numerical vs. categorical), and identifies Key Performance Indicators (KPIs).
+- **`src.visualizer`**: Generates Plotly charts for the dashboard and exploration views.
+- **`src.copilot`**: Connects to the Google Gemini API to interpret user queries and generate pandas code for answers.
+
+## 🛠️ Installation & Setup
+
+1.  **Clone the Repository**
+    ```bash
+    git clone <repository-url>
+    cd data-viz-platform
+    ```
+
+2.  **Create a Virtual Environment**
+    ```bash
+    python -m venv venv
+    # Windows
+    .\venv\Scripts\activate
+    # macOS/Linux
+    source venv/bin/activate
+    ```
+
+3.  **Install Dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Configure Environment Variables**
+    Create a `.env` file in the root directory and add your Google Gemini API key:
+    ```env
+    GEMINI_API_KEY=your_api_key_here
+    ```
+
+## ▶️ Usage
+
+Run the application using Streamlit:
+```bash
+streamlit run app.py
+```
+
+
+
+For a detailed walkthrough of features, please refer to the [User Guide](USER_GUIDE.md).

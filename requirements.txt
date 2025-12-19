@@ -1,0 +1,11 @@
+streamlit
+pandas
+plotly
+openpyxl
+scikit-learn
+scipy
+numpy
+streamlit-option-menu
+google-genai
+python-dotenv
+tabulate
