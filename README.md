@@ -85,3 +85,5 @@ streamlit run app.py
 
 
 For a detailed walkthrough of features, please refer to the [User Guide](USER_GUIDE.md).
+
+> ✨ **Developer Note**: If you are a developer, you will love reading the [Technical Reference](TECHNICAL_REFERENCE.md) for a deep dive into the architecture and algorithms.
