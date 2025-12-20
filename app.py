@@ -1537,6 +1537,6 @@ elif st.session_state.page == "Dashboard":
                         chart_index = i + j
                         with cols[j]:
                             st.plotly_chart(chart_data['fig'], use_container_width=True)
-                            if st.button(f"🔍 Enlarge", key=f"btn_{chart_index}"):
+                            if st.button(f"🔍 Enlarge", key=f"btn_{chart_index}"): #Enlarge Button for viewing the chart in Full-View.
                                 st.session_state.focused_chart_index = chart_index
                                 st.rerun()
