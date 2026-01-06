@@ -653,36 +653,90 @@ if st.session_state.page == "Home":
     
     with c1:
         st.markdown("""
-            <a href="?nav=Auto Exploration" target="_self" class="card-link">
-                <div class="feature-card">
-                    <div class="feature-icon-box icon-purple">\U00002728</div>
-                    <div class="card-title">Auto Exploration</div>
-                    <div class="card-desc">Let AI automatically discover patterns and insights in your data with one click.</div>
-                </div>
-            </a>
+            <div class="feature-card">
+                <div class="feature-icon-box icon-purple">\U00002728</div>
+                <div class="card-title">Auto Exploration</div>
+                <div class="card-desc">Let AI automatically discover patterns and insights in your data with one click.</div>
+            </div>
         """, unsafe_allow_html=True)
+        
+        # Action Row
+        ac1, ac2 = st.columns([5, 1])
+        with ac1:
+            if st.button("Launch Auto Exploration", key="btn_nav_ae", use_container_width=True):
+                st.session_state.page = "Auto Exploration"
+                st.rerun()
+        with ac2:
+            with st.popover("ℹ️", use_container_width=True):
+                st.markdown("### 🧠 How It Works")
+                st.info("""
+                **1. Data Profiling:**
+                Scans every column to detect types (Numerical, Categorical, Time-series).
+                
+                **2. Statistical Analysis:**
+                Calculates mean, median, standard deviation, and identifies missing values.
+                
+                **3. Outlier Detection:**
+                Uses IQR (Interquartile Range) method to flag anomalies in numerical data.
+                """)
         
     with c2:
         st.markdown("""
-            <a href="?nav=Data Copilot" target="_self" class="card-link">
-                <div class="feature-card">
-                    <div class="feature-icon-box icon-blue">\U0001F916</div>
-                    <div class="card-title">Data Copilot</div>
-                    <div class="card-desc">Get AI-powered chart recommendations based on your selected variables.</div>
-                </div>
-            </a>
+            <div class="feature-card">
+                <div class="feature-icon-box icon-blue">\U0001F916</div>
+                <div class="card-title">Data Copilot</div>
+                <div class="card-desc">Get AI-powered chart recommendations based on your selected variables.</div>
+            </div>
         """, unsafe_allow_html=True)
+        
+        ac1, ac2 = st.columns([5, 1])
+        with ac1:
+            if st.button("Launch Data Copilot", key="btn_nav_dc", use_container_width=True):
+                st.session_state.page = "Data Copilot"
+                st.rerun()
+        with ac2:
+            with st.popover("ℹ️", use_container_width=True):
+                st.markdown("### 🤖 Behind the AI")
+                st.info("""
+                **1. Intent Recognition:**
+                Uses **Gemini 1.5 Flash** to understand natural language queries (e.g., "Show me sales trend").
+                
+                **2. Code Generation:**
+                Dynamically writes Python/Plotly code to visualize the answer based on your dataset's schema.
+                
+                **3. Context Awareness:**
+                The model is fed the dataframe columns and sampling data to ensure accurate references.
+                """)
         
     with c3:
         st.markdown("""
-            <a href="?nav=Manual Exploration" target="_self" class="card-link">
-                <div class="feature-card">
-                    <div class="feature-icon-box icon-green">\U0001F3A8</div>
-                    <div class="card-title">Manual Exploration</div>
-                    <div class="card-desc">Drag and drop variables to create custom visualizations exactly how you want.</div>
-                </div>
-            </a>
+            <div class="feature-card">
+                <div class="feature-icon-box icon-green">\U0001F4C8</div>
+                <div class="card-title">Smart Dashboard</div>
+                <div class="card-desc">Interactive dashboard with AI-curated charts and key performance indicators.</div>
+            </div>
         """, unsafe_allow_html=True)
+        
+        ac1, ac2 = st.columns([5, 1])
+        with ac1:
+            if st.button("Launch Dashboard", key="btn_nav_dashboard", use_container_width=True):
+                st.session_state.page = "Dashboard"
+                st.rerun()
+        with ac2:
+            with st.popover("ℹ️", use_container_width=True):
+                st.markdown("### 📊 Logic Explained")
+                st.info("""
+                **1. Heuristic Selection:**
+                Automatically picks the best chart type based on data characteristics.
+                
+                **2. Rule Engine:**
+                - **Time Series** → Line Charts
+                - **Low Cardinality (<10)** → Pie/Bar Charts
+                - **Correlated Numerics** → Scatter Plots
+                
+                **3. KPI Extraction:**
+                Sums up key numerical metrics automatically for the top banner.
+                """)
         
     # Key Features Banner
     st.markdown("""
@@ -1447,6 +1501,7 @@ if st.session_state.page == "Manual Exploration":
                             height=500,
                             margin=dict(t=20, l=20, r=20, b=20)
                         )
+                        fig.update_xaxes(rangeslider_visible=True)
                         st.plotly_chart(fig, use_container_width=True)
                         
                     except Exception as e:
@@ -1540,3 +1595,6 @@ elif st.session_state.page == "Dashboard":
                             if st.button(f"🔍 Enlarge", key=f"btn_{chart_index}"): #Enlarge Button for viewing the chart in Full-View.
                                 st.session_state.focused_chart_index = chart_index
                                 st.rerun()
+
+# --- FOOTER SPACER ---
+st.markdown("<div style='height: 100px;'></div>", unsafe_allow_html=True)

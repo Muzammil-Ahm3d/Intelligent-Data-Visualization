@@ -26,6 +26,7 @@ def generate_dashboard_charts(df, col_types, kpi_cols):
             plot_bgcolor='rgba(0,0,0,0)',
             title_font_size=14
         )
+        fig.update_xaxes(rangeslider_visible=True)
         return fig
 
     # 1. TREND (Line)
