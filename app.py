@@ -1268,87 +1268,99 @@ elif st.session_state.page == "Data Copilot":
     c1, c2 = st.columns([1, 1.5])
     
     with c1:
-        # Chat Logic
-        def handle_input():
-            user_input = st.session_state.copilot_input
-            if user_input:
+
+        @st.fragment
+        def render_chat_interface():
+            # Init pending query state if needed
+            if "pending_query" not in st.session_state:
+                st.session_state.pending_query = None
+
+            # 1. PROCESS PENDING INPUT (Main Body - Safe for st.spinner)
+            if st.session_state.pending_query:
+                user_input = st.session_state.pending_query
+                st.session_state.pending_query = None # Consume it
+                
                 # Add user message
                 st.session_state.copilot_history.append({"role": "user", "content": user_input})
+                
                 # Call Gemini API
                 with st.spinner("Thinking..."):
                     answer = ask_copilot(st.session_state.df, user_input)
+                
                 # Add assistant message
                 st.session_state.copilot_history.append({"role": "assistant", "content": answer})
-                # Clear input (Streamlit hack: input is separate from key state in callback sometimes, but clearing session state key works for next render)
+
+            # 2. INPUT CALLBACK (Only updates state, no rendering)
+            def handle_submit():
+                st.session_state.pending_query = st.session_state.copilot_input
                 st.session_state.copilot_input = ""
 
-        # Build Chat HTML
-        chat_html = ""
-        for msg in st.session_state.copilot_history:
-            content = msg["content"]
-            display_html = ""
-            
-            # Handle structured response (dict) vs legacy string
-            if isinstance(content, dict):
-                main_text = content.get("content", "")
-                code_text = content.get("code", "")
+            # Build Chat HTML
+            chat_html = ""
+            for msg in st.session_state.copilot_history:
+                content = msg["content"]
+                display_html = ""
                 
-                # Convert newlines to br for main text if needed, or rely on markdown parsing? 
-                # The chat bubble is just a div, so standard text formatting. 
-                # Let's keep main text as is, maybe simple replacement for line breaks if raw string.
-                main_text = main_text.replace("\n", "<br>") 
-                
-                if content.get("type") == "code" and code_text:
-                    # Styled Code Block using HTML <details>
-                    code_html = f"""
-                    <div style="margin-top: 8px;">
-                        <details style="border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background-color: white;">
-                            <summary style="padding: 6px 12px; cursor: pointer; background-color: #f8fafc; font-size: 0.8rem; color: #64748b; font-weight: 500; outline: none; user-select: none;">
-                                \U00002728 Thinking Process
-                            </summary>
-                            <div style="background-color: #0f172a; color: #f8fafc; padding: 12px; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.8rem; overflow-x: auto; border-top: 1px solid #e2e8f0;">
-                                <pre style="margin: 0; white-space: pre-wrap;">{code_text}</pre>
-                            </div>
-                        </details>
-                    </div>
-                    """
-                    display_html = f"<div>{main_text}</div>{code_html}"
+                # Handle structured response (dict) vs legacy string
+                if isinstance(content, dict):
+                    main_text = content.get("content", "")
+                    code_text = content.get("code", "")
+                    main_text = main_text.replace("\n", "<br>") 
+                    
+                    if content.get("type") == "code" and code_text:
+                        # Styled Code Block using HTML <details>
+                        code_html = f"""
+                        <div style="margin-top: 8px;">
+                            <details style="border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background-color: white;">
+                                <summary style="padding: 6px 12px; cursor: pointer; background-color: #f8fafc; font-size: 0.8rem; color: #64748b; font-weight: 500; outline: none; user-select: none;">
+                                    \U00002728 Thinking Process
+                                </summary>
+                                <div style="background-color: #0f172a; color: #f8fafc; padding: 12px; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.8rem; overflow-x: auto; border-top: 1px solid #e2e8f0;">
+                                    <pre style="margin: 0; white-space: pre-wrap;">{code_text}</pre>
+                                </div>
+                            </details>
+                        </div>
+                        """
+                        display_html = f"<div>{main_text}</div>{code_html}"
+                    else:
+                        display_html = main_text
                 else:
-                    display_html = main_text
-            else:
-                # Legacy string
-                display_html = str(content).replace("\n", "<br>")
+                    # Legacy string
+                    display_html = str(content).replace("\n", "<br>")
 
-            if msg["role"] == "user":
-                chat_html += f'<div class="chat-bubble" style="background-color: #e0f2fe; color: #0369a1; align-self: flex-end; margin-left: auto; width: fit-content; max-width: 80%; text-align: right;">{display_html}</div>'
-            else:
-                chat_html += f'<div class="chat-bubble" style="background-color: #f1f5f9; color: #334155; align-self: flex-start; max-width: 90%;">{display_html}</div>'
+                if msg["role"] == "user":
+                    chat_html += f'<div class="chat-bubble" style="background-color: #e0f2fe; color: #0369a1; align-self: flex-end; margin-left: auto; width: fit-content; max-width: 80%; text-align: right;">{display_html}</div>'
+                else:
+                    chat_html += f'<div class="chat-bubble" style="background-color: #f1f5f9; color: #334155; align-self: flex-start; max-width: 90%;">{display_html}</div>'
 
-        st.markdown(f"""
-            <div class="copilot-card">
-                <div class="card-header-row">
-                    <div class="header-icon-box bg-purple">\U0001F916</div>
-                    <div class="card-title-text">Chat Assistant</div>
+            st.markdown(f"""
+                <div class="copilot-card">
+                    <div class="card-header-row">
+                        <div class="header-icon-box bg-purple">\U0001F916</div>
+                        <div class="card-title-text">Chat Assistant</div>
+                    </div>
+                    <div id="chat-container" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 5px;">
+                        {chat_html}
+                    </div>
                 </div>
-                <div id="chat-container" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 5px;">
-                    {chat_html}
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-        
-        # Auto-scroll Logic
-        components.html("""
-        <script>
-            var container = window.parent.document.getElementById("chat-container");
-            if (container) {
-                container.scrollTop = container.scrollHeight;
-            }
-        </script>
-        """, height=0, width=0)
-        
-        # Input - simulating positioning at bottom of card
-        st.text_input("Ask about your data...", placeholder="Ask about your data...", key="copilot_input", label_visibility="collapsed", on_change=handle_input)
-        st.markdown("<div style='margin-bottom: 2rem;'></div>", unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
+            
+            # Auto-scroll Logic
+            components.html("""
+            <script>
+                var container = window.parent.document.getElementById("chat-container");
+                if (container) {
+                    container.scrollTop = container.scrollHeight;
+                }
+            </script>
+            """, height=0, width=0)
+            
+            # Input - simulating positioning at bottom of card
+            st.text_input("Ask about your data...", placeholder="Ask about your data...", key="copilot_input", label_visibility="collapsed", on_change=handle_submit)
+            st.markdown("<div style='margin-bottom: 2rem;'></div>", unsafe_allow_html=True)
+
+        # Call the fragment
+        render_chat_interface()
 
     with c2:
         # Prepare content for the card
