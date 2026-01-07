@@ -5,6 +5,7 @@ from src.loader import load_data
 from src.analysis import get_column_types, identify_key_metrics
 from src.visualizer import generate_dashboard_charts, format_number
 from src.copilot import ask_copilot 
+from src.demo_data import load_demo_data # Added import
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,6 +13,45 @@ import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
 import streamlit.components.v1 as components
+
+# --- HELPER: CHECK DATA LOADED ---
+def check_data_loaded():
+    if st.session_state.df is None:
+        st.markdown("""
+        <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+            <div style="background-color: #dbeafe; width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                <span style="font-size: 2rem;">🚀</span>
+            </div>
+            <h3 style="color: #1e293b; margin-bottom: 0.5rem; font-weight: 700;">Exploration Ready</h3>
+            <p style="color: #64748b; margin-bottom: 0rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+                This tool requires a dataset to generate insights. You can upload your own file or instantly launch our pre-loaded Global Weather demo.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Centered Layout for Buttons
+        # [1, 2, 1] creates a center column that is 50% of width (2/4)
+        c1, c2, c3 = st.columns([1, 2, 1])
+        with c2:
+             # Equal width columns for buttons
+             col_demo, col_upload = st.columns(2, gap="large")
+             with col_demo:
+                 if st.button("🚀 Launch Weather Demo", type="primary", use_container_width=True):
+                     with st.spinner("Loading demo data..."):
+                         df = load_demo_data()
+                         if df is not None:
+                             st.session_state.df = df
+                             st.session_state.col_types = get_column_types(df)
+                             st.session_state.uploaded_file_name = "Global_Weather_Demo.xlsx"
+                             st.session_state.dashboard_generated = False
+                             st.rerun()
+             with col_upload:
+                 if st.button("📂 Go to Data Source", use_container_width=True):
+                     st.session_state.page = "Data Source"
+                     st.rerun()
+        
+        return False
+    return True
 
 # Page Config
 st.set_page_config(page_title="IDV Analytics Platform", page_icon="zb", layout="wide")
@@ -798,27 +838,59 @@ if st.session_state.page == "Data Source":
         
         st.markdown("<div style='text-align: center; color: #94a3b8; margin: 2rem 0;'>— OR UPLOAD NEW FILE —</div>", unsafe_allow_html=True)
     
-    # 2. UPLOAD AREA
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
+    # 2. UPLOAD AREA (Split into Upload and Quick Start)
+    
+    # Using 2 columns layout for Desktop
+    col_upload_area, col_quick_start = st.columns([1.5, 1])
+    
+    with col_upload_area:
         st.markdown("""
-            <div style="text-align: center; margin-bottom: 20px;">
+            <div style="background-color: white; border: 2px dashed #cbd5e1; border-radius: 16px; padding: 2rem; text-align: center; height: 100%;">
                 <div style="background:#eff6ff; width:60px; height:60px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; margin-bottom:10px;">
                     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
                 <h3 style="margin:0; color:#1e293b; font-size:1.2rem;">Upload Your Data</h3>
-            </div>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 1.5rem;">Supported: CSV, Excel (Max 200MB)</p>
         """, unsafe_allow_html=True)
         
+        # Determine unique key based on state to force reset if needed, though simple key works
         uploaded_file = st.file_uploader("Upload CSV or Excel", type=["csv", "xlsx"], key="main_uploader", label_visibility="collapsed")
         
-        st.markdown("""
-            <div style="text-align: center; margin-top: 10px; color: #94a3b8; font-size: 0.9rem;">
-                Supported formats: CSV, Excel (Max 200MB)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    with col_quick_start:
+         st.markdown("""
+            <div style="background-color: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; right: 0; background: #dbf4ff; color: #0077b6; font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-bottom-left-radius: 12px;">NEW</div>
+                <h3 style="margin-top:0; color:#1e293b; font-size:1.2rem; display: flex; align-items: center; gap: 8px;">
+                    🚀 Quick Start
+                </h3>
+                <p style="color: #64748b; font-size: 0.95rem; line-height: 1.5; margin-bottom: 0;">
+                    Don't have a dataset? Try our pre-loaded <span style="color: #3b82f6; font-weight: 600;">Global Weather Analytics</span> demo to see the platform's power.
+                </p>
             </div>
+            <div style="height: 15px;"></div>
         """, unsafe_allow_html=True)
+         
+         if st.button("Load Demo Data", type="primary", use_container_width=True):
+             with st.spinner("Loading global weather data..."):
+                 df = load_demo_data()
+                 if df is not None:
+                     st.session_state.df = df
+                     st.session_state.col_types = get_column_types(df)
+                     st.session_state.uploaded_file_name = "Global_Weather_Demo.xlsx"
+                     st.session_state.dashboard_generated = False
+                     
+                     # AUTO GENERATE ANALYTICS - REMOVED as per user request
+                     # st.session_state.page = "Auto Exploration"
+                     # st.session_state.auto_analysis_run = True 
+                     
+                     st.toast("Demo data loaded successfully!", icon="🚀")
+                     st.rerun()
+         
+         st.markdown("<div style='text-align: center; margin-top: 10px;'><a href='#' style='color: #94a3b8; font-size: 0.85rem; text-decoration: none;'>Download Sample Excel</a></div>", unsafe_allow_html=True)
 
     if uploaded_file:
         try:
@@ -867,11 +939,8 @@ elif st.session_state.page == "Auto Exploration":
     </div>
     """, unsafe_allow_html=True)
 
-    if df_ae is None:
-        st.warning("Please upload data in the 'Data Source' page first.")
-        if st.button("Go to Data Source", key="ae_go_back"):
-            st.session_state.page = "Data Source"
-            st.rerun()
+    if not check_data_loaded():
+        pass # The helper renders the UI
     
     else:
         # --- STATE MANAGEMENT ---
@@ -1265,10 +1334,13 @@ elif st.session_state.page == "Data Copilot":
         </div>
     """, unsafe_allow_html=True)
 
+    # Fallback Check - MUST BE BEFORE COLUMNS to render full width
+    if not check_data_loaded():
+        st.stop()
+
     c1, c2 = st.columns([1, 1.5])
     
     with c1:
-
         @st.fragment
         def render_chat_interface():
             # Init pending query state if needed
@@ -1396,11 +1468,8 @@ if st.session_state.page == "Manual Exploration":
     """, unsafe_allow_html=True)
 
     df_me = st.session_state.df
-    if df_me is None:
-        st.warning("Please upload data in the 'Data Source' page first.")
-        if st.button("Go to Data Source", key="me_go_back"):
-            st.session_state.page = "Data Source"
-            st.rerun()
+    if not check_data_loaded():
+        pass
     else:
         # Layout: variables on left, canvas on right
         me_col1, me_col2 = st.columns([1, 3])
@@ -1542,11 +1611,8 @@ elif st.session_state.page == "Dashboard":
             st.rerun()
 
     # --- CONTENT ---
-    if st.session_state.df is None:
-        st.warning("No data loaded. Please go to the 'Data Source' page to upload a file.")
-        if st.button("Go to Data Source"):
-            st.session_state.page = "Data Source"
-            st.rerun()
+    if not check_data_loaded():
+        pass
     else:
         # USE FILTERED DATA
         df = df_display # This comes from sidebar logic
