@@ -91,9 +91,11 @@ For a detailed walkthrough of features, please refer to the [User Guide](USER_GU
 ## Author
 Built and maintained by **Muzammil**.
 
-## Demo Pictures
+## Attribution
+If you use or adapt this project, please give credit by linking back to this repository.
+
+## Demo Pictures 
 
 <img width="1920" height="1140" alt="Image" src="https://github.com/user-attachments/assets/a6fc3afb-01fd-47e0-9bb0-6734142f4fa0" />
 
-## Attribution
-If you use or adapt this project, please give credit by linking back to this repository.
+
