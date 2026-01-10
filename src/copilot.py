@@ -4,6 +4,8 @@ import io
 import pandas as pd
 import time
 import random
+import streamlit as st
+from collections import deque
 from dotenv import load_dotenv
 from google import genai
 
@@ -22,6 +24,37 @@ def get_api_client():
     except Exception as e:
         print(f"Error initializing Gemini client: {e}")
         return None
+
+@st.cache_resource
+class GlobalRateLimiter:
+    """
+    Tracks API usage across all sessions using Streamlit's cache_resource.
+    Implements a sliding window rate limiter.
+    """
+    def __init__(self, max_requests=50, time_window=3600):
+        self.max_requests = max_requests
+        self.time_window = time_window # 1 hour in seconds
+        self.requests = []
+
+    def check_and_log(self) -> bool:
+        """
+        Checks if request is allowed. 
+        Returns True if allowed, False if limit exceeded.
+        """
+        now = time.time()
+        
+        # Prune requests older than time_window
+        # We create a new list for thread safety simplicity in Streamlit
+        self.requests = [req_time for req_time in self.requests if now - req_time < self.time_window]
+        
+        if len(self.requests) >= self.max_requests:
+            return False
+            
+        self.requests.append(now)
+        return True
+
+def get_global_rate_limiter():
+    return GlobalRateLimiter()
 
 def prepare_context(df: pd.DataFrame) -> str:
     """
@@ -140,7 +173,17 @@ def ask_copilot(df: pd.DataFrame, user_query: str) -> dict:
     ```
     """
     
+    # --- GLOBAL RATE LIMIT CHECK ---
+    limiter = get_global_rate_limiter()
+    if not limiter.check_and_log():
+        return {
+            "type": "text", 
+            "content": "⚠️ **System Limit Reached**: The shared AI demo quota (50 queries/hour) has been exceeded for the testing server. Please try again later."
+        }
+    
+    # --- API CALL ---
     max_retries = 3
+
     base_delay = 1
     
     for attempt in range(max_retries):

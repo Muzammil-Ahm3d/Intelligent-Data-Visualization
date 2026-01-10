@@ -90,6 +90,9 @@ if 'me_type' not in st.session_state:
     st.session_state.me_type = "Scatter"
 if 'copilot_history' not in st.session_state:
     st.session_state.copilot_history = [{"role": "assistant", "content": "Hello! I'm your Data Copilot. Ask me anything about your data."}]
+if 'copilot_usage_count' not in st.session_state:
+    st.session_state.copilot_usage_count = 0 
+
 
 # --- CUSTOM CSS ---
 st.markdown("""
@@ -1355,9 +1358,18 @@ elif st.session_state.page == "Data Copilot":
                 # Add user message
                 st.session_state.copilot_history.append({"role": "user", "content": user_input})
                 
-                # Call Gemini API
-                with st.spinner("Thinking..."):
-                    answer = ask_copilot(st.session_state.df, user_input)
+                # Call Gemini API if within limits
+                if "copilot_usage_count" not in st.session_state:
+                     st.session_state.copilot_usage_count = 0
+                     
+                MAX_SESSION_QUERY_LIMIT = 10
+                
+                if st.session_state.copilot_usage_count >= MAX_SESSION_QUERY_LIMIT:
+                    answer = f"🔒 **Session Limit Reached ({MAX_SESSION_QUERY_LIMIT}/{MAX_SESSION_QUERY_LIMIT})**\\n\\nTo ensure availability for all testers, the AI feature is limited per session. Please refresh the page to start a new session."
+                else:
+                    st.session_state.copilot_usage_count += 1
+                    with st.spinner(f"Thinking... (Query {st.session_state.copilot_usage_count}/{MAX_SESSION_QUERY_LIMIT})"):
+                        answer = ask_copilot(st.session_state.df, user_input)
                 
                 # Add assistant message
                 st.session_state.copilot_history.append({"role": "assistant", "content": answer})
