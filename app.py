@@ -36,7 +36,7 @@ def check_data_loaded():
              # Equal width columns for buttons
              col_demo, col_upload = st.columns(2, gap="large")
              with col_demo:
-                 if st.button("🚀 Launch Weather Demo", type="primary", use_container_width=True):
+                 if st.button("🚀 Launch Weather Demo", type="primary", width="stretch"):
                      with st.spinner("Loading demo data..."):
                          df = load_demo_data()
                          if df is not None:
@@ -46,7 +46,7 @@ def check_data_loaded():
                              st.session_state.dashboard_generated = False
                              st.rerun()
              with col_upload:
-                 if st.button("📂 Go to Data Source", use_container_width=True):
+                 if st.button("📂 Go to Data Source", width="stretch"):
                      st.session_state.page = "Data Source"
                      st.rerun()
         
@@ -683,7 +683,7 @@ if st.session_state.page == "Home":
     # CTA Button using Streamlit
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
-        if st.button("Get Started →", type="primary", use_container_width=True):
+        if st.button("Get Started →", type="primary", width="stretch"):
             st.session_state.page = "Data Source"
             st.rerun()
 
@@ -706,11 +706,11 @@ if st.session_state.page == "Home":
         # Action Row
         ac1, ac2 = st.columns([5, 1])
         with ac1:
-            if st.button("Launch Auto Exploration", key="btn_nav_ae", use_container_width=True):
+            if st.button("Launch Auto Exploration", key="btn_nav_ae", width="stretch"):
                 st.session_state.page = "Auto Exploration"
                 st.rerun()
         with ac2:
-            with st.popover("ℹ️", use_container_width=True):
+            with st.popover("ℹ️", width="stretch"):
                 st.markdown("### 🧠 How It Works")
                 st.info("""
                 **1. Data Profiling:**
@@ -734,11 +734,11 @@ if st.session_state.page == "Home":
         
         ac1, ac2 = st.columns([5, 1])
         with ac1:
-            if st.button("Launch Data Copilot", key="btn_nav_dc", use_container_width=True):
+            if st.button("Launch Data Copilot", key="btn_nav_dc", width="stretch"):
                 st.session_state.page = "Data Copilot"
                 st.rerun()
         with ac2:
-            with st.popover("ℹ️", use_container_width=True):
+            with st.popover("ℹ️", width="stretch"):
                 st.markdown("### 🤖 Behind the AI")
                 st.info("""
                 **1. Intent Recognition:**
@@ -762,11 +762,11 @@ if st.session_state.page == "Home":
         
         ac1, ac2 = st.columns([5, 1])
         with ac1:
-            if st.button("Launch Dashboard", key="btn_nav_dashboard", use_container_width=True):
+            if st.button("Launch Dashboard", key="btn_nav_dashboard", width="stretch"):
                 st.session_state.page = "Dashboard"
                 st.rerun()
         with ac2:
-            with st.popover("ℹ️", use_container_width=True):
+            with st.popover("ℹ️", width="stretch"):
                 st.markdown("### 📊 Logic Explained")
                 st.info("""
                 **1. Heuristic Selection:**
@@ -835,7 +835,7 @@ if st.session_state.page == "Data Source":
         
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-             if st.button("Proceed to Dashboard →", type="primary", use_container_width=True):
+             if st.button("Proceed to Dashboard →", type="primary", width="stretch"):
                     st.session_state.page = "Dashboard"
                     st.rerun()
         
@@ -877,7 +877,7 @@ if st.session_state.page == "Data Source":
             <div style="height: 15px;"></div>
         """, unsafe_allow_html=True)
          
-         if st.button("Load Demo Data", type="primary", use_container_width=True):
+         if st.button("Load Demo Data", type="primary", width="stretch"):
              with st.spinner("Loading global weather data..."):
                  df = load_demo_data()
                  if df is not None:
@@ -976,14 +976,14 @@ elif st.session_state.page == "Auto Exploration":
                 if not num_df.empty and len(num_df.columns) > 1:
                     fig = px.imshow(num_df.corr(), text_auto=True, color_continuous_scale='RdBu_r', aspect="auto")
                     fig.update_layout(height=800)
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width="stretch")
                     
             elif chart_type == "Distribution Analysis":
                  if not num_df.empty:
                     target_col = num_df.std().idxmax()
                     fig = px.box(df_ae, y=target_col, points="outliers", title=f"Distribution of {target_col}")
                     fig.update_layout(height=800)
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width="stretch")
                     
             elif chart_type == "Trend Analysis":
                 if len(date_cols) > 0 and not num_df.empty:
@@ -992,7 +992,7 @@ elif st.session_state.page == "Auto Exploration":
                     df_trend = df_ae.sort_values(by=date_col)
                     fig = px.line(df_trend, x=date_col, y=val_col, title=f"{val_col} over {date_col}")
                     fig.update_layout(height=800)
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width="stretch")
         
         else:
             # --- NORMAL VIEW (Hero + Grid) ---
@@ -1183,7 +1183,7 @@ elif st.session_state.page == "Auto Exploration":
                                 
                             fig_corr = px.imshow(num_df.corr(), text_auto=True, color_continuous_scale='RdBu_r', aspect="auto")
                             fig_corr.update_layout(height=300, margin=dict(l=0, r=0, t=0, b=0))
-                            st.plotly_chart(fig_corr, use_container_width=True)
+                            st.plotly_chart(fig_corr, width="stretch")
 
                         # B. DISTRIBUTION
                         st.divider()
@@ -1197,7 +1197,7 @@ elif st.session_state.page == "Auto Exploration":
                                  
                             fig_dist = px.box(df_ae, y=target_col, points="outliers")
                             fig_dist.update_layout(height=300, margin=dict(l=0, r=0, t=0, b=0))
-                            st.plotly_chart(fig_dist, use_container_width=True)
+                            st.plotly_chart(fig_dist, width="stretch")
                         
                         # C. TREND
                         if len(date_cols) > 0 and not num_df.empty:
@@ -1214,7 +1214,7 @@ elif st.session_state.page == "Auto Exploration":
                             df_trend = df_ae.sort_values(by=date_col)
                             fig_trend = px.line(df_trend, x=date_col, y=val_col)
                             fig_trend.update_layout(height=250, margin=dict(l=0, r=0, t=0, b=0))
-                            st.plotly_chart(fig_trend, use_container_width=True)
+                            st.plotly_chart(fig_trend, width="stretch")
 
             else:
                 # Placeholder State
@@ -1595,7 +1595,7 @@ if st.session_state.page == "Manual Exploration":
                             margin=dict(t=20, l=20, r=20, b=20)
                         )
                         fig.update_xaxes(rangeslider_visible=True)
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, width="stretch")
                         
                     except Exception as e:
                         st.error(f"Could not generate chart: {e}")
@@ -1660,7 +1660,7 @@ elif st.session_state.page == "Dashboard":
                      st.markdown(f"## 🔍 View: {chart_data.get('title', 'Chart')}")
                      fig = chart_data['fig']
                      fig.update_layout(height=700, margin=dict(t=50, l=50, r=50, b=50))
-                     st.plotly_chart(fig, use_container_width=True)
+                     st.plotly_chart(fig, width="stretch")
             
             # Grid View
             else:
@@ -1681,7 +1681,7 @@ elif st.session_state.page == "Dashboard":
                     for j, chart_data in enumerate(row_charts):
                         chart_index = i + j
                         with cols[j]:
-                            st.plotly_chart(chart_data['fig'], use_container_width=True)
+                            st.plotly_chart(chart_data['fig'], width="stretch")
                             if st.button(f"🔍 Enlarge", key=f"btn_{chart_index}"): #Enlarge Button for viewing the chart in Full-View.
                                 st.session_state.focused_chart_index = chart_index
                                 st.rerun()
