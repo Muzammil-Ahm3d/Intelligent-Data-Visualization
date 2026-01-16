@@ -18,12 +18,12 @@ import streamlit.components.v1 as components
 def check_data_loaded():
     if st.session_state.df is None:
         st.markdown("""
-        <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
-            <div style="background-color: #dbeafe; width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+        <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 2.5rem; text-align: center; margin-top: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+            <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%); width: 60px; height: 60px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; border: 1px solid rgba(99, 102, 241, 0.3);">
                 <span style="font-size: 2rem;">🚀</span>
             </div>
-            <h3 style="color: #1e293b; margin-bottom: 0.5rem; font-weight: 700;">Exploration Ready</h3>
-            <p style="color: #64748b; margin-bottom: 0rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+            <h3 style="color: #f1f5f9; margin-bottom: 0.5rem; font-weight: 700;">Exploration Ready</h3>
+            <p style="color: #94a3b8; margin-bottom: 0rem; max-width: 500px; margin-left: auto; margin-right: auto;">
                 This tool requires a dataset to generate insights. You can upload your own file or instantly launch our pre-loaded Global Weather demo.
             </p>
         </div>
@@ -99,7 +99,7 @@ st.markdown("""
 <style>
     /* Main Background */
     .stApp {
-        background: linear-gradient(to bottom right, #e0f2fe, #eef2ff, #f3e8ff);
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
         background-attachment: fixed;
     }
     
@@ -185,82 +185,101 @@ st.markdown("""
         box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
     }
     
-    /* Chart Cards */
+    /* Chart Cards - Dark Theme */
     .stPlotlyChart {
-        background-color: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        padding: 10px;
-        border: 1px solid #f1f5f9;
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        border: 1px solid rgba(99, 102, 241, 0.2);
         transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stPlotlyChart:hover {
+        border-color: rgba(99, 102, 241, 0.4);
+        box-shadow: 0 12px 40px rgba(99, 102, 241, 0.15);
     }
 
-    /* Metrics */
+    /* Metrics - Dark Theme */
     div[data-testid="stMetric"] {
-        background-color: white;
-        padding: 15px;
-        border-radius: 12px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+        padding: 18px;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         text-align: center;
-        border: 1px solid #e2e8f0;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    div[data-testid="stMetric"] label {
+        color: #94a3b8 !important;
+    }
+    div[data-testid="stMetric"] [data-testid="stMetricValue"] {
+        color: #f1f5f9 !important;
     }
     
-    /* Global Primary Button Style (Blue) */
-    /* Global Primary Button Style (Blue) */
+    /* Global Primary Button Style - Gradient */
     div.stButton > button[kind="primary"] {
-        background-color: #3b82f6 !important;
-        border-color: #3b82f6 !important;
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+        border: 1px solid rgba(99, 102, 241, 0.5) !important;
         color: white !important;
         font-weight: 600;
-        border-radius: 8px;
-        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        padding: 0.6rem 1.2rem;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        transition: all 0.3s ease;
     }
     div.stButton > button[kind="primary"]:hover {
-        background-color: #2563eb !important;
-        border-color: #2563eb !important;
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+        border-color: rgba(99, 102, 241, 0.8) !important;
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        transform: translateY(-2px);
     }
     
-    /* Feature Cards CSS (Restored) */
-    .feature-card {
-        background: white;
-        border-radius: 16px;
-        padding: 1.5rem;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        transition: transform 0.2s, box-shadow 0.2s;
-        height: 100%;
-        cursor: pointer;
-    }
-    .feature-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        border-color: #cbd5e1;
-    }
-    .feature-icon-box {
-        width: 48px;
-        height: 48px;
+    /* Secondary Buttons - Dark Theme */
+    div.stButton > button:not([kind="primary"]) {
+        background: rgba(30, 41, 59, 0.6) !important;
+        border: 1px solid rgba(99, 102, 241, 0.3) !important;
+        color: #c7d2fe !important;
         border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
+        transition: all 0.3s ease;
     }
-    .icon-purple { background: linear-gradient(135deg, #a855f7 0%, #d946ef 100%); }
-    .icon-blue { background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%); }
-    .icon-green { background: linear-gradient(135deg, #22c55e 0%, #10b981 100%); }
+    div.stButton > button:not([kind="primary"]):hover {
+        background: rgba(99, 102, 241, 0.2) !important;
+        border-color: rgba(99, 102, 241, 0.5) !important;
+        color: #fff !important;
+    }
     
-    .card-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #0f172a;
-        margin-bottom: 0.5rem;
+    /* File Uploader - Dark Theme */
+    div[data-testid='stFileUploader'] {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
+        border: 2px dashed rgba(99, 102, 241, 0.4) !important;
+        border-radius: 16px;
     }
-    .card-desc {
-        color: #64748b;
-        font-size: 0.95rem;
-        line-height: 1.5;
+    div[data-testid='stFileUploader']:hover {
+        border-color: rgba(99, 102, 241, 0.7) !important;
+    }
+    div[data-testid='stFileUploader'] section {
+        color: #94a3b8;
+    }
+    
+    /* Text Input - Dark Theme */
+    .stTextInput input, .stSelectbox select, .stMultiSelect div[data-baseweb="select"] {
+        background: rgba(30, 41, 59, 0.8) !important;
+        border-color: rgba(99, 102, 241, 0.3) !important;
+        color: #f1f5f9 !important;
+        border-radius: 12px;
+    }
+    
+    /* Expander - Dark Theme */
+    .streamlit-expanderHeader {
+        background: rgba(30, 41, 59, 0.8) !important;
+        border-radius: 12px;
+        color: #f1f5f9 !important;
+    }
+    
+    /* Info/Warning boxes - Dark Theme */
+    .stAlert {
+        background: rgba(30, 41, 59, 0.8) !important;
+        border-radius: 12px;
+        border-left: 4px solid rgba(99, 102, 241, 0.6) !important;
     }
     
     /* Link styling for cards */
@@ -275,6 +294,222 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+# --- CURSOR TRAIL EFFECT (Antigravity Style) ---
+import streamlit.components.v1 as components
+cursor_effect_html = """
+<style>
+    .cursor-glow {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        border-radius: 50%;
+        mix-blend-mode: screen;
+        filter: blur(1px);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .cursor-glow.active {
+        opacity: 1;
+    }
+    .cursor-glow-1 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.08) 40%, transparent 70%);
+    }
+    .cursor-glow-2 {
+        width: 250px;
+        height: 250px;
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(236, 72, 153, 0.1) 40%, transparent 70%);
+    }
+    .cursor-glow-3 {
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(34, 211, 238, 0.15) 40%, transparent 70%);
+    }
+    
+    /* Floating particles */
+    .cursor-particle {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+        border-radius: 50%;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+    .cursor-particle.active {
+        opacity: 1;
+    }
+</style>
+
+<div class="cursor-glow cursor-glow-1" id="glow1"></div>
+<div class="cursor-glow cursor-glow-2" id="glow2"></div>
+<div class="cursor-glow cursor-glow-3" id="glow3"></div>
+
+<script>
+(function() {
+    const parentDoc = window.parent.document;
+    
+    // Check if already injected
+    if (parentDoc.getElementById('cursor-effect-container')) return;
+    
+    // Create container
+    const container = parentDoc.createElement('div');
+    container.id = 'cursor-effect-container';
+    container.innerHTML = `
+        <style>
+            .cursor-glow {
+                position: fixed;
+                pointer-events: none;
+                z-index: 9999;
+                border-radius: 50%;
+                mix-blend-mode: screen;
+                filter: blur(2px);
+                opacity: 0;
+                transition: opacity 0.5s ease;
+                will-change: transform;
+            }
+            .cursor-glow.active {
+                opacity: 1;
+            }
+            .cursor-glow-1 {
+                width: 500px;
+                height: 500px;
+                background: radial-gradient(circle, 
+                    rgba(99, 102, 241, 0.12) 0%, 
+                    rgba(139, 92, 246, 0.06) 30%, 
+                    rgba(168, 85, 247, 0.03) 50%,
+                    transparent 70%);
+            }
+            .cursor-glow-2 {
+                width: 300px;
+                height: 300px;
+                background: radial-gradient(circle, 
+                    rgba(168, 85, 247, 0.18) 0%, 
+                    rgba(236, 72, 153, 0.08) 40%, 
+                    transparent 70%);
+            }
+            .cursor-glow-3 {
+                width: 150px;
+                height: 150px;
+                background: radial-gradient(circle, 
+                    rgba(59, 130, 246, 0.22) 0%, 
+                    rgba(34, 211, 238, 0.12) 40%, 
+                    transparent 70%);
+            }
+            
+            /* Small trailing particles */
+            .trail-dot {
+                position: fixed;
+                pointer-events: none;
+                z-index: 9997;
+                border-radius: 50%;
+                opacity: 0;
+                transition: opacity 0.15s ease, transform 0.15s ease;
+            }
+        </style>
+        <div class="cursor-glow cursor-glow-1" id="parentGlow1"></div>
+        <div class="cursor-glow cursor-glow-2" id="parentGlow2"></div>
+        <div class="cursor-glow cursor-glow-3" id="parentGlow3"></div>
+    `;
+    parentDoc.body.appendChild(container);
+    
+    const glow1 = parentDoc.getElementById('parentGlow1');
+    const glow2 = parentDoc.getElementById('parentGlow2');
+    const glow3 = parentDoc.getElementById('parentGlow3');
+    
+    // Trail particles
+    const particles = [];
+    const particleCount = 8;
+    const colors = [
+        'rgba(99, 102, 241, 0.6)',
+        'rgba(139, 92, 246, 0.6)',
+        'rgba(168, 85, 247, 0.6)',
+        'rgba(236, 72, 153, 0.5)',
+        'rgba(59, 130, 246, 0.6)',
+        'rgba(34, 211, 238, 0.5)',
+        'rgba(129, 140, 248, 0.6)',
+        'rgba(192, 132, 252, 0.5)'
+    ];
+    
+    for (let i = 0; i < particleCount; i++) {
+        const dot = parentDoc.createElement('div');
+        dot.className = 'trail-dot';
+        dot.style.width = (4 + Math.random() * 4) + 'px';
+        dot.style.height = dot.style.width;
+        dot.style.background = colors[i % colors.length];
+        dot.style.boxShadow = '0 0 ' + (5 + i * 2) + 'px ' + colors[i % colors.length];
+        parentDoc.body.appendChild(dot);
+        particles.push({
+            el: dot,
+            x: 0,
+            y: 0,
+            delay: (i + 1) * 0.08
+        });
+    }
+    
+    // Mouse tracking
+    let mouseX = 0, mouseY = 0;
+    let glow1X = 0, glow1Y = 0;
+    let glow2X = 0, glow2Y = 0;
+    let glow3X = 0, glow3Y = 0;
+    let isActive = false;
+    
+    parentDoc.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        if (!isActive) {
+            isActive = true;
+            glow1.classList.add('active');
+            glow2.classList.add('active');
+            glow3.classList.add('active');
+            particles.forEach(p => p.el.style.opacity = '1');
+        }
+    });
+    
+    parentDoc.addEventListener('mouseleave', () => {
+        isActive = false;
+        glow1.classList.remove('active');
+        glow2.classList.remove('active');
+        glow3.classList.remove('active');
+        particles.forEach(p => p.el.style.opacity = '0');
+    });
+    
+    // Animation loop with easing
+    function animate() {
+        // Main glows with different follow speeds
+        const ease1 = 0.06;
+        const ease2 = 0.08;
+        const ease3 = 0.12;
+        
+        glow1X += (mouseX - glow1X) * ease1;
+        glow1Y += (mouseY - glow1Y) * ease1;
+        glow2X += (mouseX - glow2X) * ease2;
+        glow2Y += (mouseY - glow2Y) * ease2;
+        glow3X += (mouseX - glow3X) * ease3;
+        glow3Y += (mouseY - glow3Y) * ease3;
+        
+        glow1.style.transform = `translate(${glow1X - 250}px, ${glow1Y - 250}px)`;
+        glow2.style.transform = `translate(${glow2X - 150}px, ${glow2Y - 150}px)`;
+        glow3.style.transform = `translate(${glow3X - 75}px, ${glow3Y - 75}px)`;
+        
+        // Trail particles
+        particles.forEach((p, i) => {
+            const prevP = i === 0 ? {x: mouseX, y: mouseY} : particles[i - 1];
+            p.x += (prevP.x - p.x) * (0.3 - i * 0.02);
+            p.y += (prevP.y - p.y) * (0.3 - i * 0.02);
+            p.el.style.transform = `translate(${p.x - 3}px, ${p.y - 3}px) scale(${1 - i * 0.08})`;
+        });
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
+})();
+</script>
+"""
+components.html(cursor_effect_html, height=0, scrolling=False)
 
 # --- SIDEBAR NAV & FILTERS ---
 from streamlit_option_menu import option_menu
@@ -590,89 +825,303 @@ if st.session_state.page == "Home":
             .hero-container {
                 text-align: center;
                 padding: 4rem 0;
-                background: linear-gradient(180deg, rgba(99,102,241,0.05) 0%, rgba(255,255,255,0) 100%);
-                border-radius: 20px;
+                background: linear-gradient(135deg, 
+                    rgba(99, 102, 241, 0.08) 0%, 
+                    rgba(168, 85, 247, 0.06) 25%,
+                    rgba(236, 72, 153, 0.04) 50%,
+                    rgba(34, 211, 238, 0.06) 75%,
+                    rgba(255, 255, 255, 0) 100%);
+                border-radius: 24px;
                 margin-bottom: 2rem;
+                position: relative;
+                overflow: hidden;
+            }
+            .hero-container::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                            radial-gradient(circle at 70% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+                            radial-gradient(circle at 80% 30%, rgba(34, 211, 238, 0.1) 0%, transparent 40%);
+                animation: shimmer 15s ease-in-out infinite alternate;
+                pointer-events: none;
+            }
+            @keyframes shimmer {
+                0% { transform: translate(0, 0) rotate(0deg); }
+                100% { transform: translate(5%, 5%) rotate(3deg); }
             }
             .hero-title {
                 font-size: 3.5rem;
                 font-weight: 800;
                 margin-bottom: 1rem;
-                color: #0f172a;
+                color: #f1f5f9;
+                position: relative;
+                z-index: 1;
+            }
+            .hero-title span {
+                background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 40%, #d946ef 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
             }
             .hero-subtitle {
                 font-size: 1.25rem;
-                color: #64748b;
+                color: #94a3b8;
                 max-width: 600px;
                 margin: 0 auto 2rem auto;
                 line-height: 1.6;
+                position: relative;
+                z-index: 1;
             }
             .cta-button {
                 display: inline-block;
-                background-color: #3b82f6;
+                background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
                 color: white;
                 font-weight: 600;
                 padding: 0.8rem 2rem;
-                border-radius: 8px;
+                border-radius: 12px;
                 text-decoration: none;
-                transition: background-color 0.2s;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
             }
             .cta-button:hover {
-                background-color: #2563eb;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
             }
             
-            .feature-card {
-                background: white;
-                border-radius: 16px;
-                padding: 2rem;
-                border: 1px solid #f1f5f9;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            /* 3D Feature Cards - Dark Theme */
+            .card-wrapper {
+                perspective: 1000px;
                 height: 100%;
-                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            .feature-card {
+                background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+                backdrop-filter: blur(20px);
+                border-radius: 20px;
+                padding: 1.75rem;
+                border: 1px solid rgba(99, 102, 241, 0.2);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                            0 2px 8px rgba(0, 0, 0, 0.2),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+                height: 100%;
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                transform-style: preserve-3d;
+                position: relative;
+                overflow: visible;
+            }
+            .feature-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, 
+                    rgba(99, 102, 241, 0.1) 0%, 
+                    rgba(168, 85, 247, 0.08) 50%,
+                    rgba(236, 72, 153, 0.05) 100%);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                pointer-events: none;
+                border-radius: 20px;
+            }
+            .feature-card:hover::before {
+                opacity: 1;
             }
             .feature-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-                border-color: #cbd5e1;
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2),
+                            0 8px 16px rgba(0, 0, 0, 0.25),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                border-color: rgba(99, 102, 241, 0.5);
+            }
+            
+            
+            /* Card Header with Icon and Info Button */
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 1rem;
             }
             .feature-icon-box {
-                width: 50px;
-                height: 50px;
-                border-radius: 12px;
+                width: 56px;
+                height: 56px;
+                border-radius: 16px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-bottom: 1.5rem;
-                font-size: 1.5rem;
+                font-size: 1.6rem;
                 color: white;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+                transform: translateZ(20px);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
-            .icon-purple { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
-            .icon-blue { background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%); }
-            .icon-green { background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); }
+            .feature-card:hover .feature-icon-box {
+                transform: translateZ(40px) scale(1.1);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            }
+            .info-btn {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: rgba(99, 102, 241, 0.2);
+                border: 1px solid rgba(99, 102, 241, 0.3);
+                color: #a5b4fc;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.9rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                position: relative;
+                z-index: 100;
+            }
+            .info-btn:hover {
+                background: rgba(99, 102, 241, 0.4);
+                border-color: rgba(99, 102, 241, 0.6);
+                color: #fff;
+                transform: scale(1.1);
+                z-index: 1000;
+            }
+            /* Tooltip popup - positioned below-left */
+            .info-btn::after {
+                content: attr(data-tooltip);
+                position: absolute;
+                top: calc(100% + 12px);
+                right: 0;
+                width: 280px;
+                padding: 16px;
+                background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                border: 1px solid rgba(99, 102, 241, 0.5);
+                border-radius: 14px;
+                color: #e2e8f0;
+                font-size: 0.85rem;
+                font-weight: 400;
+                line-height: 1.7;
+                text-align: left;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
+                            0 0 30px rgba(99, 102, 241, 0.15);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.25s ease;
+                z-index: 10000;
+                pointer-events: none;
+                white-space: pre-wrap;
+                transform: translateY(-10px);
+            }
+            /* Arrow pointing up */
+            .info-btn::before {
+                content: '';
+                position: absolute;
+                top: calc(100% + 4px);
+                right: 8px;
+                border: 8px solid transparent;
+                border-bottom-color: rgba(99, 102, 241, 0.5);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.25s ease;
+                z-index: 10001;
+            }
+            .info-btn:hover::after {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            .info-btn:hover::before {
+                opacity: 1;
+                visibility: visible;
+            }
+            .icon-purple { 
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); 
+            }
+            .icon-blue { 
+                background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
+            }
+            .icon-green { 
+                background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); 
+            }
             
             .card-title {
                 font-size: 1.25rem;
                 font-weight: 700;
-                color: #0f172a;
+                color: #f1f5f9;
                 margin-bottom: 0.5rem;
+                transform: translateZ(15px);
             }
             .card-desc {
-                color: #64748b;
+                color: #94a3b8;
                 font-size: 0.95rem;
-                line-height: 1.5;
+                line-height: 1.6;
+                transform: translateZ(10px);
+                margin-bottom: 1.25rem;
+            }
+            .card-action-btn {
+                display: block;
+                width: 100%;
+                padding: 0.75rem 1rem;
+                background: linear-gradient(135deg, rgba(99, 102, 241, 0.3) 0%, rgba(139, 92, 246, 0.3) 100%);
+                border: 1px solid rgba(99, 102, 241, 0.4);
+                border-radius: 12px;
+                color: #c7d2fe;
+                font-weight: 600;
+                font-size: 0.9rem;
+                text-align: center;
+                text-decoration: none;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .card-action-btn:hover {
+                background: linear-gradient(135deg, rgba(99, 102, 241, 0.5) 0%, rgba(139, 92, 246, 0.5) 100%);
+                border-color: rgba(99, 102, 241, 0.6);
+                color: #fff;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
             }
             
             .key-feature-banner {
-                background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
-                border-radius: 16px;
+                background: linear-gradient(135deg, 
+                    #667eea 0%, 
+                    #764ba2 30%, 
+                    #f093fb 70%, 
+                    #4facfe 100%);
+                background-size: 200% 200%;
+                animation: gradient-shift 8s ease infinite;
+                border-radius: 20px;
                 padding: 3rem;
                 color: white;
                 margin-top: 3rem;
+                box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+                position: relative;
+                overflow: hidden;
+            }
+            .key-feature-banner::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, 
+                    rgba(255,255,255,0.1) 0%, 
+                    transparent 50%, 
+                    rgba(255,255,255,0.1) 100%);
+                pointer-events: none;
+            }
+            @keyframes gradient-shift {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
             }
         </style>
         
         <div class="hero-container">
-            <div class="hero-title">Welcome to <span style="color: #6366f1;">IDV</span></div>
+            <div class="hero-title">Welcome to <span>IDV</span></div>
             <div class="hero-subtitle">
                 AI-powered data analytics and visualization platform. Explore, analyze, and discover insights automatically.
             </div>
@@ -697,89 +1146,47 @@ if st.session_state.page == "Home":
     with c1:
         st.markdown("""
             <div class="feature-card">
-                <div class="feature-icon-box icon-purple">\U00002728</div>
+                <div class="card-header">
+                    <div class="feature-icon-box icon-purple">✨</div>
+                    <div class="info-btn" data-tooltip="📊 Data Profiling: Scans columns to detect types (Numerical, Categorical, Time-series). 📈 Statistical Analysis: Calculates mean, median, std dev. 🔍 Outlier Detection: Uses IQR method to flag anomalies.">i</div>
+                </div>
                 <div class="card-title">Auto Exploration</div>
                 <div class="card-desc">Let AI automatically discover patterns and insights in your data with one click.</div>
             </div>
         """, unsafe_allow_html=True)
-        
-        # Action Row
-        ac1, ac2 = st.columns([5, 1])
-        with ac1:
-            if st.button("Launch Auto Exploration", key="btn_nav_ae", width="stretch"):
-                st.session_state.page = "Auto Exploration"
-                st.rerun()
-        with ac2:
-            with st.popover("ℹ️", width="stretch"):
-                st.markdown("### 🧠 How It Works")
-                st.info("""
-                **1. Data Profiling:**
-                Scans every column to detect types (Numerical, Categorical, Time-series).
-                
-                **2. Statistical Analysis:**
-                Calculates mean, median, standard deviation, and identifies missing values.
-                
-                **3. Outlier Detection:**
-                Uses IQR (Interquartile Range) method to flag anomalies in numerical data.
-                """)
+        if st.button("🚀 Launch", key="btn_nav_ae", type="primary", use_container_width=True):
+            st.session_state.page = "Auto Exploration"
+            st.rerun()
         
     with c2:
         st.markdown("""
             <div class="feature-card">
-                <div class="feature-icon-box icon-blue">\U0001F916</div>
+                <div class="card-header">
+                    <div class="feature-icon-box icon-blue">🤖</div>
+                    <div class="info-btn" data-tooltip="🧠 Intent Recognition: Uses Gemini AI for natural language queries. 💻 Code Generation: Writes Python/Plotly code dynamically. 📋 Context Aware: Fed with dataframe schema for accuracy.">i</div>
+                </div>
                 <div class="card-title">Data Copilot</div>
                 <div class="card-desc">Get AI-powered chart recommendations based on your selected variables.</div>
             </div>
         """, unsafe_allow_html=True)
-        
-        ac1, ac2 = st.columns([5, 1])
-        with ac1:
-            if st.button("Launch Data Copilot", key="btn_nav_dc", width="stretch"):
-                st.session_state.page = "Data Copilot"
-                st.rerun()
-        with ac2:
-            with st.popover("ℹ️", width="stretch"):
-                st.markdown("### 🤖 Behind the AI")
-                st.info("""
-                **1. Intent Recognition:**
-                Uses **Gemini 1.5 Flash** to understand natural language queries (e.g., "Show me sales trend").
-                
-                **2. Code Generation:**
-                Dynamically writes Python/Plotly code to visualize the answer based on your dataset's schema.
-                
-                **3. Context Awareness:**
-                The model is fed the dataframe columns and sampling data to ensure accurate references.
-                """)
+        if st.button("🚀 Launch", key="btn_nav_dc", type="primary", use_container_width=True):
+            st.session_state.page = "Data Copilot"
+            st.rerun()
         
     with c3:
         st.markdown("""
             <div class="feature-card">
-                <div class="feature-icon-box icon-green">\U0001F4C8</div>
+                <div class="card-header">
+                    <div class="feature-icon-box icon-green">📈</div>
+                    <div class="info-btn" data-tooltip="🎯 Heuristic Selection: Auto-picks best chart types. ⚙️ Rule Engine: Time series→Line, Low cardinality→Pie/Bar. 📊 KPI Extraction: Sums key metrics automatically.">i</div>
+                </div>
                 <div class="card-title">Smart Dashboard</div>
                 <div class="card-desc">Interactive dashboard with AI-curated charts and key performance indicators.</div>
             </div>
         """, unsafe_allow_html=True)
-        
-        ac1, ac2 = st.columns([5, 1])
-        with ac1:
-            if st.button("Launch Dashboard", key="btn_nav_dashboard", width="stretch"):
-                st.session_state.page = "Dashboard"
-                st.rerun()
-        with ac2:
-            with st.popover("ℹ️", width="stretch"):
-                st.markdown("### 📊 Logic Explained")
-                st.info("""
-                **1. Heuristic Selection:**
-                Automatically picks the best chart type based on data characteristics.
-                
-                **2. Rule Engine:**
-                - **Time Series** → Line Charts
-                - **Low Cardinality (<10)** → Pie/Bar Charts
-                - **Correlated Numerics** → Scatter Plots
-                
-                **3. KPI Extraction:**
-                Sums up key numerical metrics automatically for the top banner.
-                """)
+        if st.button("🚀 Launch", key="btn_nav_dashboard", type="primary", use_container_width=True):
+            st.session_state.page = "Dashboard"
+            st.rerun()
         
     # Key Features Banner
     st.markdown("""
@@ -818,16 +1225,16 @@ if st.session_state.page == "Data Source":
     # 1. SHOW CURRENTLY LOADED DATA (If Exists)
     if st.session_state.df is not None:
         st.markdown(f"""
-        <div style="background-color: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+        <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
             <div style="display: flex; align-items: center; gap: 1rem;">
-                <div style="background-color: #dcfce7; color: #166534; padding: 10px; border-radius: 50%;">
+                <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(22, 163, 74, 0.3) 100%); color: #4ade80; padding: 12px; border-radius: 50%; border: 1px solid rgba(34, 197, 94, 0.3);">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
                 <div>
-                    <h4 style="margin: 0; color: #0f172a; font-weight: 600;">Data Ready: {st.session_state.get('uploaded_file_name', 'Dataset')}</h4>
-                    <p style="margin: 0; color: #64748b; font-size: 0.9rem;">{len(st.session_state.df)} rows loaded successfully</p>
+                    <h4 style="margin: 0; color: #f1f5f9; font-weight: 600;">Data Ready: {st.session_state.get('uploaded_file_name', 'Dataset')}</h4>
+                    <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">{len(st.session_state.df)} rows loaded successfully</p>
                 </div>
             </div>
         </div>
@@ -848,13 +1255,13 @@ if st.session_state.page == "Data Source":
     
     with col_upload_area:
         st.markdown("""
-            <div style="background-color: white; border: 2px dashed #cbd5e1; border-radius: 16px; padding: 2rem; text-align: center; height: 100%;">
-                <div style="background:#eff6ff; width:60px; height:60px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; margin-bottom:10px;">
+            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%); border: 2px dashed rgba(99, 102, 241, 0.4); border-radius: 16px; padding: 2rem; text-align: center; height: 100%;">
+                <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%); width:60px; height:60px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; margin-bottom:10px; border: 1px solid rgba(99, 102, 241, 0.3);">
                     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <h3 style="margin:0; color:#1e293b; font-size:1.2rem;">Upload Your Data</h3>
+                <h3 style="margin:0; color:#f1f5f9; font-size:1.2rem;">Upload Your Data</h3>
                 <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 1.5rem;">Supported: CSV, Excel (Max 200MB)</p>
         """, unsafe_allow_html=True)
         
@@ -865,13 +1272,13 @@ if st.session_state.page == "Data Source":
 
     with col_quick_start:
          st.markdown("""
-            <div style="background-color: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 0; right: 0; background: #dbf4ff; color: #0077b6; font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-bottom-left-radius: 12px;">NEW</div>
-                <h3 style="margin-top:0; color:#1e293b; font-size:1.2rem; display: flex; align-items: center; gap: 8px;">
+            <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 2rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; right: 0; background: linear-gradient(135deg, rgba(34, 211, 238, 0.2) 0%, rgba(6, 182, 212, 0.3) 100%); color: #22d3ee; font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-bottom-left-radius: 12px; border: 1px solid rgba(34, 211, 238, 0.3);">NEW</div>
+                <h3 style="margin-top:0; color:#f1f5f9; font-size:1.2rem; display: flex; align-items: center; gap: 8px;">
                     🚀 Quick Start
                 </h3>
-                <p style="color: #64748b; font-size: 0.95rem; line-height: 1.5; margin-bottom: 0;">
-                    Don't have a dataset? Try our pre-loaded <span style="color: #3b82f6; font-weight: 600;">Global Weather Analytics</span> demo to see the platform's power.
+                <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.5; margin-bottom: 0;">
+                    Don't have a dataset? Try our pre-loaded <span style="color: #818cf8; font-weight: 600;">Global Weather Analytics</span> demo to see the platform's power.
                 </p>
             </div>
             <div style="height: 15px;"></div>
@@ -919,7 +1326,7 @@ elif st.session_state.page == "Auto Exploration":
     # --- AUTO EXPLORATION LOGIC (Integrated) ---
     df_ae = st.session_state.df
     
-    # --- PAGE SPECIFIC CSS (Green Button) ---
+    # --- PAGE SPECIFIC CSS (Chart Overflow Fix + Button Styling) ---
     st.markdown("""
     <style>
         /* Force Primary Button to Blue on this page (Global now handles it, but just in case of conflict) */
@@ -932,13 +1339,44 @@ elif st.session_state.page == "Auto Exploration":
             background-color: #2563eb !important;
             border-color: #2563eb !important;
         }
+        
+        /* FIX: Chart Overflow - Ensure charts stay within container */
+        [data-testid="stVerticalBlock"] .stPlotlyChart {
+            max-width: 100% !important;
+            overflow: hidden !important;
+        }
+        
+        [data-testid="stVerticalBlock"] .stPlotlyChart > div {
+            max-width: 100% !important;
+            overflow: hidden !important;
+        }
+        
+        /* Ensure iframe/plot containers respect parent width */
+        .stPlotlyChart iframe,
+        .stPlotlyChart .plotly-graph-div {
+            max-width: 100% !important;
+        }
+        
+        /* Container constraints for bordered containers */
+        div[data-testid="stVerticalBlockBorderWrapper"] {
+            overflow: hidden !important;
+        }
+        
+        div[data-testid="stVerticalBlockBorderWrapper"] > div {
+            overflow: hidden !important;
+        }
+        
+        /* Smart Charts section specific fix */
+        .element-container {
+            max-width: 100% !important;
+        }
     </style>
     """, unsafe_allow_html=True)
 
     st.markdown("""
     <div style="margin-top: -1rem; margin-bottom: 2rem;">
-        <h1 style="color: #0f172a; font-size: 2rem; font-weight: 800;">Auto Exploration</h1>
-        <p style="color: #64748b; font-size: 1rem;">Let AI automatically discover insights in your data</p>
+        <h1 style="color: #f1f5f9; font-size: 2rem; font-weight: 800;">Auto Exploration</h1>
+        <p style="color: #94a3b8; font-size: 1rem;">Let AI automatically discover insights in your data</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -975,15 +1413,15 @@ elif st.session_state.page == "Auto Exploration":
             if chart_type == "Correlation Matrix":
                 if not num_df.empty and len(num_df.columns) > 1:
                     fig = px.imshow(num_df.corr(), text_auto=True, color_continuous_scale='RdBu_r', aspect="auto")
-                    fig.update_layout(height=800)
-                    st.plotly_chart(fig, width="stretch")
+                    fig.update_layout(height=800, autosize=True)
+                    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': True})
                     
             elif chart_type == "Distribution Analysis":
                  if not num_df.empty:
                     target_col = num_df.std().idxmax()
                     fig = px.box(df_ae, y=target_col, points="outliers", title=f"Distribution of {target_col}")
-                    fig.update_layout(height=800)
-                    st.plotly_chart(fig, width="stretch")
+                    fig.update_layout(height=800, autosize=True)
+                    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': True})
                     
             elif chart_type == "Trend Analysis":
                 if len(date_cols) > 0 and not num_df.empty:
@@ -991,8 +1429,8 @@ elif st.session_state.page == "Auto Exploration":
                     val_col = num_df.columns[0]
                     df_trend = df_ae.sort_values(by=date_col)
                     fig = px.line(df_trend, x=date_col, y=val_col, title=f"{val_col} over {date_col}")
-                    fig.update_layout(height=800)
-                    st.plotly_chart(fig, width="stretch")
+                    fig.update_layout(height=800, autosize=True)
+                    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': True})
         
         else:
             # --- NORMAL VIEW (Hero + Grid) ---
@@ -1091,13 +1529,13 @@ elif st.session_state.page == "Auto Exploration":
                          top_pair = stack.idxmax()
                          summary_points.append(f"A strong relationship exists between **{top_pair[0]}** and **{top_pair[1]}**.")
 
-                # RENDER SUMMARY
+                # RENDER SUMMARY - Dark Theme
                 st.markdown(f"""
-                <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border-left: 5px solid #6366f1;">
-                    <h3 style="margin-top: 0; color: #1e293b; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border-left: 5px solid #6366f1; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+                    <h3 style="margin-top: 0; color: #f1f5f9; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
                         ⚡ Executive Summary
                     </h3>
-                    <p style="color: #475569; line-height: 1.6; margin-bottom: 0;">
+                    <p style="color: #cbd5e1; line-height: 1.6; margin-bottom: 0;">
                         {' '.join(summary_points)}
                     </p>
                 </div>
@@ -1125,8 +1563,8 @@ elif st.session_state.page == "Auto Exploration":
                                 if len(outliers) > 0:
                                     st.markdown(f"""
                                     <div style="margin-bottom: 10px; padding-left: 10px; border-left: 3px solid #ef4444;">
-                                        <strong>{col}</strong>: Found <span style="color:#ef4444;">{len(outliers)} outliers</span> 
-                                        (Range: {num_df[col].min():.1f} - {num_df[col].max():.1f})
+                                        <strong style="color: #f1f5f9;">{col}</strong>: Found <span style="color:#ef4444; font-weight: 600;">{len(outliers)} outliers</span> 
+                                        <span style="color: #94a3b8;">(Range: {num_df[col].min():.1f} - {num_df[col].max():.1f})</span>
                                     </div>
                                     """, unsafe_allow_html=True)
                         else:
@@ -1148,7 +1586,7 @@ elif st.session_state.page == "Auto Exploration":
                                     st.markdown(f"""
                                     <div style="margin-bottom: 8px;">
                                         <span class="insight-badge">Correlation {score:.2f}</span>
-                                        <span style="color: #334155;">{col1}</span> & <span style="color: #334155;">{col2}</span>
+                                        <span style="color: #e2e8f0;">{col1}</span> & <span style="color: #e2e8f0;">{col2}</span>
                                     </div>
                                     """, unsafe_allow_html=True)
                             else:
@@ -1182,8 +1620,8 @@ elif st.session_state.page == "Auto Exploration":
                                 st.rerun()
                                 
                             fig_corr = px.imshow(num_df.corr(), text_auto=True, color_continuous_scale='RdBu_r', aspect="auto")
-                            fig_corr.update_layout(height=300, margin=dict(l=0, r=0, t=0, b=0))
-                            st.plotly_chart(fig_corr, width="stretch")
+                            fig_corr.update_layout(height=300, margin=dict(l=0, r=0, t=0, b=0), autosize=True)
+                            st.plotly_chart(fig_corr, use_container_width=True, config={'displayModeBar': False})
 
                         # B. DISTRIBUTION
                         st.divider()
@@ -1196,8 +1634,8 @@ elif st.session_state.page == "Auto Exploration":
                                  st.rerun()
                                  
                             fig_dist = px.box(df_ae, y=target_col, points="outliers")
-                            fig_dist.update_layout(height=300, margin=dict(l=0, r=0, t=0, b=0))
-                            st.plotly_chart(fig_dist, width="stretch")
+                            fig_dist.update_layout(height=300, margin=dict(l=0, r=0, t=0, b=0), autosize=True)
+                            st.plotly_chart(fig_dist, use_container_width=True, config={'displayModeBar': False})
                         
                         # C. TREND
                         if len(date_cols) > 0 and not num_df.empty:
@@ -1213,8 +1651,8 @@ elif st.session_state.page == "Auto Exploration":
 
                             df_trend = df_ae.sort_values(by=date_col)
                             fig_trend = px.line(df_trend, x=date_col, y=val_col)
-                            fig_trend.update_layout(height=250, margin=dict(l=0, r=0, t=0, b=0))
-                            st.plotly_chart(fig_trend, width="stretch")
+                            fig_trend.update_layout(height=250, margin=dict(l=0, r=0, t=0, b=0), autosize=True)
+                            st.plotly_chart(fig_trend, use_container_width=True, config={'displayModeBar': False})
 
             else:
                 # Placeholder State
@@ -1595,7 +2033,7 @@ if st.session_state.page == "Manual Exploration":
                             margin=dict(t=20, l=20, r=20, b=20)
                         )
                         fig.update_xaxes(rangeslider_visible=True)
-                        st.plotly_chart(fig, width="stretch")
+                        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': True})
                         
                     except Exception as e:
                         st.error(f"Could not generate chart: {e}")
@@ -1660,7 +2098,7 @@ elif st.session_state.page == "Dashboard":
                      st.markdown(f"## 🔍 View: {chart_data.get('title', 'Chart')}")
                      fig = chart_data['fig']
                      fig.update_layout(height=700, margin=dict(t=50, l=50, r=50, b=50))
-                     st.plotly_chart(fig, width="stretch")
+                     st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': True})
             
             # Grid View
             else:
@@ -1681,7 +2119,7 @@ elif st.session_state.page == "Dashboard":
                     for j, chart_data in enumerate(row_charts):
                         chart_index = i + j
                         with cols[j]:
-                            st.plotly_chart(chart_data['fig'], width="stretch")
+                            st.plotly_chart(chart_data['fig'], use_container_width=True, config={'displayModeBar': False})
                             if st.button(f"🔍 Enlarge", key=f"btn_{chart_index}"): #Enlarge Button for viewing the chart in Full-View.
                                 st.session_state.focused_chart_index = chart_index
                                 st.rerun()
