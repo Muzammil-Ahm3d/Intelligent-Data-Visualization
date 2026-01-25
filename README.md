@@ -14,31 +14,7 @@ Welcome to the **Intelligent Data Visualization Platform**, a comprehensive tool
 
 The platform is built using a modular architecture to ensure scalability and maintainability.
 
-```mermaid
-graph TD
-    User(["User"]) <--> App["Streamlit App (app.py)"]
-    
-    subgraph "Frontend Layer"
-        App
-    end
-    
-    subgraph "Logic Layer"
-        Loader[src.loader]
-        Analysis[src.analysis]
-        Visualizer[src.visualizer]
-        Copilot[src.copilot]
-    end
-    
-    subgraph "External Services"
-        Gemini["Google Gemini API"]
-    end
-    
-    App -->|Load Data| Loader
-    App -->|Profile Data| Analysis
-    App -->|Generate Charts| Visualizer
-    App -->|Ask Question| Copilot
-    Copilot <-->|API Call| Gemini
-```
+<img width="1325" height="728" alt="Image" src="https://github.com/user-attachments/assets/d72fe272-4e61-4274-9c54-07830ff38ef8" />
 
 ### Components
 - **`app.py`**: The main entry point. It handles the UI layout, navigation state, and user interactions.
