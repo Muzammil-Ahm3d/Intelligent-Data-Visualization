@@ -85,3 +85,162 @@ If you use or adapt this project, please give credit by linking back to this rep
 <img width="1920" height="1140" alt="Image" src="https://github.com/user-attachments/assets/a6fc3afb-01fd-47e0-9bb0-6734142f4fa0" />
 
 
+
+# Project Diagrams (Intelligent Data Visualization)
+
+Below are five diagrams that explain the system architecture and flows of the Intelligent Data Visualization platform.
+Paste these Mermaid blocks directly into your README.md (or another markdown file) — GitHub supports rendering Mermaid diagrams inline.
+
+## Figure 1 — System Architecture
+```mermaid
+flowchart LR
+  subgraph UI["Streamlit UI (app.py)"]
+    A[Home / Nav / Sidebar] --> B[Data Source Page]
+    A --> C[Auto Exploration Page]
+    A --> D[Data Copilot Page]
+    A --> E[Manual Exploration Page]
+    A --> F[Dashboard Page]
+  end
+
+  subgraph Backend["Application Modules (src/)"]
+    L[Loader<br/>(src.loader)] --> P[Preprocessed Data]
+    P --> AN[Analyzer<br/>(src.analysis)]
+    AN --> KPIs[KPI Extraction]
+    AN --> Features[Feature Detection]
+    AN --> ChartPlan[Chart Selection Heuristics]
+    V[Visualizer<br/>(src.visualizer)] --> Plotly[Plotly Charts]
+    CP[Copilot<br/>(src.copilot)] -->|Gemini API| Gemini[Google Gemini / LLM]
+    Demo[Demo Data<br/>(src.demo_data)]
+  end
+
+  B -->|upload CSV/Excel| L
+  Demo --> P
+  P --> AN
+  ChartPlan --> V
+  KPIs --> V
+  C -->|Run Advanced Scan| AN
+  D -->|Ask natural language| CP
+  CP --> AN
+  CP --> V
+  V --> F
+  Plotly --> F
+  Gemini --> CP
+```
+
+## Figure 2 — Use Case Diagram
+```mermaid
+flowchart LR
+  actor1[(Data Analyst)]
+  actor2[(Business User)]
+  actor3[(Admin)]
+  actor1 --- UC1[Upload Data]
+  actor1 --- UC2[Run Auto Exploration]
+  actor1 --- UC3[Manual Exploration / Custom Plots]
+  actor1 --- UC4[Ask Data Copilot (NL)]
+  actor2 --- UC5[View Dashboard & KPIs]
+  actor2 --- UC4
+  actor3 --- UC6[Manage Demo / Env]
+  UC1 --> System["IDV Platform"]
+  UC2 --> System
+  UC3 --> System
+  UC4 --> System
+  UC5 --> System
+  UC6 --> System
+```
+
+## Figure 3 — Class Diagram
+```mermaid
+classDiagram
+  class App {
+    +run()
+    +render_pages()
+    +handle_navigation()
+    -session_state
+  }
+  class Loader {
+    +load_data(file)
+    +preview()
+    -_read_csv()
+    -_read_excel()
+  }
+  class Analysis {
+    +get_column_types(df)
+    +identify_key_metrics(df)
+    +run_advanced_scan(df)
+  }
+  class Visualizer {
+    +generate_dashboard_charts(df, col_types, kpis)
+    +format_number(x)
+    +create_plotly_chart(spec)
+  }
+  class Copilot {
+    +ask_copilot(prompt, context)
+    +execute_generated_code(code)
+  }
+  class DemoData {
+    +load_demo_data(name)
+  }
+
+  App --> Loader : uses
+  App --> Analysis : uses
+  App --> Visualizer : uses
+  App --> Copilot : uses
+  App --> DemoData : loads
+  Analysis --> Visualizer : provides chart_plan
+  Copilot --> Analysis : requests metadata
+```
+
+## Figure 4 — Sequence Diagram
+```mermaid
+sequenceDiagram
+  participant User
+  participant StreamlitApp as App (app.py)
+  participant Loader as src.loader
+  participant Analysis as src.analysis
+  participant Visualizer as src.visualizer
+  participant Copilot as src.copilot
+  participant Gemini as Google Gemini
+
+  User->>App: Click "Upload file" / drag CSV
+  App->>Loader: load_data(file)
+  Loader-->>App: DataFrame (preview)
+  App->>Analysis: run_advanced_scan(df)
+  Analysis-->>App: col_types, kpis, chart_plan
+  App->>Visualizer: generate_dashboard_charts(df, col_types, kpis)
+  Visualizer-->>App: Plotly charts
+  App-->>User: Render Dashboard (charts + KPIs)
+
+  Note right of User: Data Copilot flow
+  User->>App: Ask natural-language question
+  App->>Copilot: ask_copilot(prompt, df_schema)
+  Copilot->>Gemini: send prompt + context
+  Gemini-->>Copilot: generated python/pandas code + explanation
+  Copilot->>App: code + result (or code to exec)
+  App->>Visualizer: render result (table/plot)
+  App-->>User: Show answer & visualization
+```
+
+## Figure 5 — Activity Diagram (Auto Exploration)
+```mermaid
+flowchart TD
+  Start([Start])
+  Upload[Upload CSV / Excel]
+  Preview[Preview first rows]
+  CheckHeaders{Has header row?}
+  Preprocess[Preprocess & Clean Data]
+  DetectTypes[Detect column types]
+  HasNumeric{Enough numeric columns?}
+  KPISelect[Score & Select top KPIs]
+  ChartGen[Generate chart plan (trend, composition, distribution)]
+  Render[Render charts + Quick Summary]
+  End([End])
+
+  Start --> Upload --> Preview --> CheckHeaders
+  CheckHeaders -- Yes --> Preprocess --> DetectTypes --> HasNumeric
+  CheckHeaders -- No --> Upload
+  HasNumeric -- Yes --> KPISelect --> ChartGen --> Render --> End
+  HasNumeric -- No --> Render --> End
+```
+
+  
+  class Backend,L,AN,V,CP,Demo backend;
