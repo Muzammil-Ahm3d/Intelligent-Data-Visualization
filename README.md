@@ -134,15 +134,15 @@ flowchart LR
   BU[Business User]
   AD[Admin]
 
-  DA --- UC1[Upload Data]
-  DA --- UC2[Run Auto Exploration]
-  DA --- UC3[Manual Exploration / Custom Plots]
-  DA --- UC4[Ask Data Copilot (NL)]
+  DA --- UC1["Upload Data"]
+  DA --- UC2["Run Auto Exploration"]
+  DA --- UC3["Manual Exploration / Custom Plots"]
+  DA --- UC4["Ask Data Copilot (NL)"]
 
-  BU --- UC5[View Dashboard & KPIs]
+  BU --- UC5["View Dashboard & KPIs"]
   BU --- UC4
 
-  AD --- UC6[Manage Demo / Env]
+  AD --- UC6["Manage Demo / Env"]
 
   UC1 --> System["IDV Platform"]
   UC2 --> System
