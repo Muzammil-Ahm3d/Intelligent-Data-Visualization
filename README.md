@@ -103,14 +103,14 @@ flowchart LR
   end
 
   subgraph Backend["Application Modules (src/)"]
-    L[Loader<br/>(src.loader)] --> P[Preprocessed Data]
-    P --> AN[Analyzer<br/>(src.analysis)]
-    AN --> KPIs[KPI Extraction]
-    AN --> Features[Feature Detection]
-    AN --> ChartPlan[Chart Selection Heuristics]
-    V[Visualizer<br/>(src.visualizer)] --> Plotly[Plotly Charts]
-    CP[Copilot<br/>(src.copilot)] -->|Gemini API| Gemini[Google Gemini / LLM]
-    Demo[Demo Data<br/>(src.demo_data)]
+    L["Loader (src.loader)"] --> P["Preprocessed Data"]
+    P --> AN["Analyzer (src.analysis)"]
+    AN --> KPIs["KPI Extraction"]
+    AN --> Features["Feature Detection"]
+    AN --> ChartPlan["Chart Selection Heuristics"]
+    V["Visualizer (src.visualizer)"] --> Plotly["Plotly Charts"]
+    CP["Copilot (src.copilot)"] -->|Gemini API| Gemini["Google Gemini / LLM"]
+    Demo["Demo Data (src.demo_data)"]
   end
 
   B -->|upload CSV/Excel| L
@@ -130,16 +130,20 @@ flowchart LR
 ## Figure 2 — Use Case Diagram
 ```mermaid
 flowchart LR
-  actor1[(Data Analyst)]
-  actor2[(Business User)]
-  actor3[(Admin)]
-  actor1 --- UC1[Upload Data]
-  actor1 --- UC2[Run Auto Exploration]
-  actor1 --- UC3[Manual Exploration / Custom Plots]
-  actor1 --- UC4[Ask Data Copilot (NL)]
-  actor2 --- UC5[View Dashboard & KPIs]
-  actor2 --- UC4
-  actor3 --- UC6[Manage Demo / Env]
+  DA[Data Analyst]
+  BU[Business User]
+  AD[Admin]
+
+  DA --- UC1[Upload Data]
+  DA --- UC2[Run Auto Exploration]
+  DA --- UC3[Manual Exploration / Custom Plots]
+  DA --- UC4[Ask Data Copilot (NL)]
+
+  BU --- UC5[View Dashboard & KPIs]
+  BU --- UC4
+
+  AD --- UC6[Manage Demo / Env]
+
   UC1 --> System["IDV Platform"]
   UC2 --> System
   UC3 --> System
@@ -231,7 +235,7 @@ flowchart TD
   DetectTypes[Detect column types]
   HasNumeric{Enough numeric columns?}
   KPISelect[Score & Select top KPIs]
-  ChartGen[Generate chart plan (trend, composition, distribution)]
+  ChartGen["Generate chart plan (trend, composition, distribution)"]
   Render[Render charts + Quick Summary]
   End([End])
 
